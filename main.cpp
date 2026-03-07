@@ -32,7 +32,7 @@ public:
         cout << "\nAppliance Name: " << name << endl;
         cout << "Power Rating: " << powerRating << " W" << endl;
         cout << "Usage Hours: " << usageHours << " hrs/day" << endl;
-        cout << "Energy Consumption: " << calculateEnergy() << " kWh" << endl;
+        cout << "Energy Consumption: " << calculateEnergy() << " kWh\n";
     }
 };
 
@@ -43,6 +43,8 @@ int main()
     int count = 0;
     int choice;
     double totalEnergy = 0;
+    double tariff;
+    double bill;
 
     do
     {
@@ -51,8 +53,10 @@ int main()
         cout << "1. Register Appliance\n";
         cout << "2. View Appliances\n";
         cout << "3. Calculate Total Energy\n";
-        cout << "4. Exit\n";
+        cout << "4. Calculate Electricity Bill\n";
+        cout << "5. Exit\n";
         cout << "Enter your choice: ";
+
         cin >> choice;
 
         switch (choice)
@@ -89,6 +93,27 @@ int main()
             break;
 
         case 4:
+
+            totalEnergy = 0;
+
+            for (int i = 0; i < count; i++)
+            {
+                totalEnergy += appliances[i].calculateEnergy();
+            }
+
+            cout << "Enter electricity tariff per kWh: ";
+            cin >> tariff;
+
+            bill = totalEnergy * tariff;
+
+            cout << "\n===== BILLING SUMMARY =====\n";
+            cout << "Total Energy: " << totalEnergy << " kWh\n";
+            cout << "Tariff: " << tariff << " per kWh\n";
+            cout << "Total Bill: " << bill << endl;
+
+            break;
+
+        case 5:
             cout << "Exiting program...\n";
             break;
 
@@ -96,7 +121,7 @@ int main()
             cout << "Invalid choice!\n";
         }
 
-    } while (choice != 4);
+    } while (choice != 5);
 
     return 0;
 }
