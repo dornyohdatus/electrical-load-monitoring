@@ -22,11 +22,17 @@ public:
         cin >> usageHours;
     }
 
+    double calculateEnergy()
+    {
+        return (powerRating * usageHours) / 1000;
+    }
+
     void displayAppliance()
     {
         cout << "\nAppliance Name: " << name << endl;
-        cout << "Power Rating: " << powerRating << " Watts" << endl;
-        cout << "Usage Hours: " << usageHours << " hours/day" << endl;
+        cout << "Power Rating: " << powerRating << " W" << endl;
+        cout << "Usage Hours: " << usageHours << " hrs/day" << endl;
+        cout << "Energy Consumption: " << calculateEnergy() << " kWh" << endl;
     }
 };
 
@@ -36,6 +42,7 @@ int main()
     Appliance appliances[10];
     int count = 0;
     int choice;
+    double totalEnergy = 0;
 
     do
     {
@@ -43,7 +50,8 @@ int main()
         cout << "\n===== Electrical Load Monitoring System =====\n";
         cout << "1. Register Appliance\n";
         cout << "2. View Appliances\n";
-        cout << "3. Exit\n";
+        cout << "3. Calculate Total Energy\n";
+        cout << "4. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -51,8 +59,15 @@ int main()
         {
 
         case 1:
-            appliances[count].registerAppliance();
-            count++;
+            if (count < 10)
+            {
+                appliances[count].registerAppliance();
+                count++;
+            }
+            else
+            {
+                cout << "Maximum appliances reached.\n";
+            }
             break;
 
         case 2:
@@ -63,14 +78,25 @@ int main()
             break;
 
         case 3:
-            cout << "Program exiting...\n";
+            totalEnergy = 0;
+
+            for (int i = 0; i < count; i++)
+            {
+                totalEnergy += appliances[i].calculateEnergy();
+            }
+
+            cout << "\nTotal Energy Consumption: " << totalEnergy << " kWh\n";
+            break;
+
+        case 4:
+            cout << "Exiting program...\n";
             break;
 
         default:
             cout << "Invalid choice!\n";
         }
 
-    } while (choice != 3);
+    } while (choice != 4);
 
     return 0;
 }
