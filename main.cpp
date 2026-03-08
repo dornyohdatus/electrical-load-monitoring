@@ -68,7 +68,6 @@ int main()
 
         switch (choice)
         {
-
         case 1:
             if (count < 10)
             {
@@ -101,7 +100,7 @@ int main()
             break;
 
         case 4:
-
+        {
             totalEnergy = 0;
 
             for (int i = 0; i < count; i++)
@@ -109,7 +108,7 @@ int main()
                 totalEnergy += appliances[i].calculateEnergy();
             }
 
-            cout << "Enter electricity tariff per kWh: ";
+            cout << "Enter electricity tariff per kwh: ";
             cin >> tariff;
 
             bill = totalEnergy * tariff;
@@ -119,13 +118,22 @@ int main()
             cout << "Tariff: " << tariff << " per kWh\n";
             cout << "Total Bill: " << bill << endl;
 
+            ofstream billFile("billing_summary.txt", ios::app);
+
+            billFile << "Total Energy: " << totalEnergy << " kWh ";
+            billFile << "Tariff: " << tariff << " per kWh ";
+            billFile << "Total Bill: " << bill << endl;
+
+            billFile.close();
             break;
+        }
         case 5:
             cout << "Exiting program...\n";
             break;
 
         default:
             cout << "Invalid choice!\n";
+            break;
         }
     } while (choice != 5);
 
