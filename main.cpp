@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -34,6 +35,12 @@ public:
         cout << "Usage Hours: " << usageHours << " hrs/day" << endl;
         cout << "Energy Consumption: " << calculateEnergy() << " kWh\n";
     }
+    void saveToFile()
+    {
+        ofstream file("appliances.txt", ios::app);
+        file << name << " " << powerRating << " " << usageHours << endl;
+        file.close();
+    }
 };
 
 int main()
@@ -66,11 +73,12 @@ int main()
             if (count < 10)
             {
                 appliances[count].registerAppliance();
+                appliances[count].saveToFile();
                 count++;
             }
             else
             {
-                cout << "Maximum appliances reached.\n";
+                cout << "Maximum appliances reached!" << endl;
             }
             break;
 
@@ -112,7 +120,6 @@ int main()
             cout << "Total Bill: " << bill << endl;
 
             break;
-
         case 5:
             cout << "Exiting program...\n";
             break;
@@ -120,7 +127,6 @@ int main()
         default:
             cout << "Invalid choice!\n";
         }
-
     } while (choice != 5);
 
     return 0;
